@@ -1,33 +1,112 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>左右翻页H5</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>清华大学经济管理学院 2026博士项目申报指南</title>
+  <link rel="stylesheet" href="index.css" />
 </head>
 <body>
 
-  <div class="swiper-container">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide"><img src="image/page1.jpg" alt="页面1"></div>
-      <div class="swiper-slide"><img src="image/page2.jpg" alt="页面2"></div>
-      <div class="swiper-slide"><img src="image/page3.jpg" alt="页面3"></div>
-      <div class="swiper-slide"><img src="image/page4.jpg" alt="页面4"></div>
-      <div class="swiper-slide"><img src="image/page5.jpg" alt="页面5"></div>
+  <!-- ================================================
+       #app — 水平三段：封面 / 轮播区 / 尾页
+       ================================================ -->
+  <div id="app">
+
+    <!-- ===== 封面页 ===== -->
+    <section id="page-cover" class="page page-cover">
+      <img
+        class="full-img cover-img"
+        src="images/每页底/1_首页_1_0410_18点.jpg"
+        alt="清华大学经济管理学院2026博士项目申报指南"
+      />
+      <div class="swipe-hint">
+        <img src="images/左右翻页查看_0410_18点.png" alt="左右翻页查看" class="swipe-hint-img" />
+      </div>
+    </section>
+
+    <!-- ===== 轮播图区域 ===== -->
+    <section id="page-slides" class="page page-slides">
+      <!-- slide 节点由 JS 动态生成 -->
+      <div class="slides-wrapper" id="slidesWrapper"></div>
+    </section>
+
+    <!-- ===== 尾页 ===== -->
+    <section id="page-ending" class="page page-ending">
+      <!-- 背景图 -->
+      <img
+        class="full-img ending-bg"
+        src="images/每页底/14_结尾_1_0410_18点.jpg"
+        alt="结尾"
+      />
+      <!-- 前景内容（使命/愿望/价值观 + 按钮 + logo） -->
+      <div class="ending-content">
+        <div class="ending-buttons">
+          <a class="ending-action-btn" href="https://www.sem.tsinghua.edu.cn/" target="_blank">
+            <img src="images/访问官网_0410_18点.png" alt="访问官网" />
+          </a>
+          <a class="ending-action-btn" href="tel:+8610-6278-5515">
+            <img src="images/拨打电话_0410_18点.png" alt="拨打电话" />
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /#app -->
+
+  <!-- ================================================
+       固定浮层（#app 外，避免 transform 裁切）
+       ================================================ -->
+
+  <!-- 左翻页箭头（左箭头-1 是朝左的） -->
+  <button class="nav-btn nav-prev" id="btnPrev" aria-label="上一页">
+    <img src="images/左箭头-1_0410_18点.png" alt="上一页" />
+  </button>
+
+  <!-- 右翻页箭头（左箭头 朝右，CSS 水平翻转）-->
+  <button class="nav-btn nav-next" id="btnNext" aria-label="下一页">
+    <img src="images/左箭头-1_0410_18点.png" alt="下一页" class="flip-h" />
+  </button>
+
+  <!-- 右下角目录按钮（仅轮播页显示） -->
+  <button class="menu-btn" id="menuBtn" aria-label="目录">
+    <img src="images/目录_0410_18点.png" alt="目录" />
+  </button>
+
+  <!-- 封面/尾页的底部学院 Logo 条（轮播页隐藏） -->
+  <div class="bottom-bar" id="bottomBar">
+    <img src="images/底_0410_18点.jpg" alt="清华大学经济管理学院" class="bottom-bar-img" />
+  </div>
+
+  <!-- ================================================
+       目录弹层（蒙版 + 带背景图的面板 + 底部 logo 条）
+       整体从屏幕底部向上弹出
+       ================================================ -->
+  <div class="menu-overlay" id="menuOverlay"></div>
+
+  <div class="menu-panel" id="menuPanel">
+    <!-- 背景图（撑满面板内容区） -->
+    <img src="images/目录_底_0410_18点.png" class="menu-panel-bg" alt="" />
+
+    <!-- 内容层 -->
+    <div class="menu-content">
+      <!-- 顶部：标题 + 关闭 -->
+      <div class="menu-header">
+        <button class="menu-close" id="menuClose" aria-label="关闭目录">
+          <img src="images/关闭_0410_18点.png" alt="关闭" />
+        </button>
+      </div>
+      <!-- 列表 -->
+      <ul class="menu-list" id="menuList"></ul>
+    </div>
+
+    <!-- Logo 条作为弹窗底部，随弹窗一起动画 -->
+    <div class="menu-bottom-bar">
+      <img src="images/底_0410_18点.jpg" alt="清华大学经济管理学院" class="bottom-bar-img" />
     </div>
   </div>
 
-  <div class="menu-box">
-    <div class="menu-btn">菜单</div>
-    <div class="menu-list">
-      <a data-index="0">封面</a>
-      <a data-index="1">第一页</a>
-      <a data-index="2">第二页</a>
-      <a data-index="3">第三页</a>
-      <a data-index="4">尾页</a>
-    </div>
-  </div>
-
-  <script src="js/script.js"></script>
+  <script src="index.js"></script>
 </body>
 </html>
