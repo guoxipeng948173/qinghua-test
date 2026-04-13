@@ -1,0 +1,541 @@
+/* ============================================================
+   自定义字体
+   ============================================================ */
+@font-face {
+  font-family: 'AlibabaPuHuiTiSubset';
+  src: url('subset-font.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============================================================
+   全局 & 重置
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  font-family: 'AlibabaPuHuiTiSubset', -apple-system, "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ============================================================
+   底部 Logo 条的高度变量（calc 统一引用）
+   270/1080 = 25vw；加上系统安全区
+   ============================================================ */
+:root {
+  --bar-h: calc(25vw + env(safe-area-inset-bottom, 0px));
+}
+
+/* ============================================================
+   #app — 水平轨道（cover → slides → ending）
+   ============================================================ */
+#app {
+  display: flex;
+  flex-direction: row;
+  width: 300vw;
+  height: 100%;
+  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+/* ============================================================
+   通用 .page
+   ============================================================ */
+.page {
+  flex: 0 0 100vw;
+  width: 100vw;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ============================================================
+   封面页
+   ============================================================ */
+.page-cover { background: #1a1a2e; }
+
+/* 全屏背景图（封面/尾页共用），底部留出 logo 条高度不被遮挡 */
+.full-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  display: block;
+}
+
+.cover-img { object-position: center center; }
+
+/* 封面：左右翻页提示图（底部居中，在 logo 条上方） */
+.swipe-hint {
+  position: absolute;
+  bottom: calc(var(--bar-h) + 18px);
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  animation: hintPulse 1.8s ease-in-out infinite;
+  z-index: 2;
+}
+
+.swipe-hint-img {
+  display: block;
+  width: 122px;
+  height: auto;
+}
+
+@keyframes hintPulse {
+  0%, 100% { opacity: 0.55; }
+  50%       { opacity: 1;   }
+}
+
+/* ============================================================
+   轮播图页
+   ============================================================ */
+.page-slides { background: #f0f0f0; }
+
+.slides-wrapper {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+/* 每张幻灯片 — 纵向可滚动，底部留出 logo 条高度 */
+.slide {
+  flex: 0 0 100vw;
+  width: 100vw;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+}
+.slide::-webkit-scrollbar { display: none; }
+.slide { scrollbar-width: none; }
+
+.slide-content-wrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.slide-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ============================================================
+   立即申请按钮（图片式，绝对定位在长图内部）
+   ============================================================ */
+.apply-btn {
+  position: absolute;
+  bottom: calc(var(--bar-h) + 10vw);
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  text-decoration: none;
+  z-index: 10;
+}
+
+.apply-btn-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ============================================================
+   尾页
+   ============================================================ */
+.page-ending { background: #5b2d8e; }
+
+/* 尾页背景图只占上半区域（让文字内容在下方显示） */
+.ending-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
+/* 前景文字内容层 */
+.ending-content {
+  position: absolute;
+  top: 85vw;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 28px;
+  gap: 6px;
+}
+
+.ending-section {
+  padding: 10px 0 8px;
+}
+
+.ending-label {
+  margin: 0 0 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.75);
+  letter-spacing: 2px;
+}
+
+.ending-value {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.55;
+  letter-spacing: 1px;
+}
+
+.ending-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.25);
+  margin: 2px 0;
+}
+
+/* 访问官网 / 拨打电话 按钮区 */
+.ending-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.ending-action-btn {
+  display: block;
+  text-decoration: none;
+}
+
+.ending-action-btn img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* ============================================================
+   底部学院 Logo 条（封面/尾页显示，轮播页隐藏）
+   ============================================================ */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 300;
+  height: var(--bar-h);
+  overflow: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.bottom-bar-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* ============================================================
+   左右翻页按钮（贴边，图片箭头）
+   ============================================================ */
+.nav-btn {
+  position: fixed;
+  top: 75%;
+  transform: translateY(-50%);
+  z-index: 130;
+  width: 30px;
+  height: 75px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s;
+}
+
+.nav-btn img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* 右箭头：把左箭头图片水平翻转 */
+.flip-h { transform: scaleX(-1); }
+
+.nav-prev { left: 0; }
+.nav-next { right: 0; }
+
+.nav-btn.disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ============================================================
+   右下角目录按钮
+   bottom 对齐 logo 条顶部上方一点
+   ============================================================ */
+.menu-btn {
+  position: fixed;
+  right: 12px;
+  bottom: calc(var(--bar-h) + 8px);
+  z-index: 130;
+  width: 52px;
+  height: 52px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  transition: opacity 0.3s, transform 0.15s;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.menu-btn img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.menu-btn:active { transform: scale(0.9); }
+
+/* ============================================================
+   目录弹出蒙版（全屏覆盖）
+   ============================================================ */
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  z-index: 200;
+  pointer-events: none;
+  transition: background 0.35s;
+}
+
+.menu-overlay.open {
+  background: rgba(0, 0, 0, 0.4);
+  pointer-events: all;
+}
+
+/* ============================================================
+   目录面板
+   bottom: 0 — 从屏幕最底部弹起（面板内部自带 logo 条）
+   z-index: 250 — 在 bottom-bar(300) 下层，但 bottom-bar 轮播时隐藏
+   ============================================================ */
+.menu-panel {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 250;
+  max-height: 92vh;
+  min-height: 50vh;
+  border-radius: 20px 20px 0 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(100%);
+  transition: transform 0.38s cubic-bezier(0.32, 0.72, 0, 1);
+  box-shadow: 0 -4px 40px rgba(0, 0, 0, 0.5);
+}
+
+.menu-panel.open { transform: translateY(0); }
+
+/* 背景图：绝对铺满内容区 */
+.menu-panel-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  z-index: 0;
+  border-radius: 20px 20px 0 0;
+}
+
+/* 内容层 */
+.menu-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* 面板顶部：标题 + 关闭 */
+.menu-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 26px 20px 14px 24px;
+  flex-shrink: 0;
+}
+
+.menu-header-titles { flex: 1; }
+
+.menu-header-line1,
+.menu-header-line2 {
+  margin: 0;
+  line-height: 1.3;
+  font-weight: 700;
+  color: #fff;
+  font-size: 18px;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+.menu-header-line2 { font-size: 20px; }
+
+.menu-close {
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin-left: 12px;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+
+.menu-close img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* 分隔线 */
+.menu-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.3);
+  margin: 0 20px 6px;
+  flex-shrink: 0;
+}
+
+/* 列表区域（可滚动） */
+.menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 24px 16px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+}
+.menu-list::-webkit-scrollbar { display: none; }
+.menu-list { scrollbar-width: none; }
+
+/* Logo 条作为弹窗底部（随弹窗一起动画，不单独 fixed） */
+.menu-bottom-bar {
+  flex-shrink: 0;
+  height: var(--bar-h);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.menu-bottom-bar .bottom-bar-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* 一级可点击条目 */
+.menu-item {
+  padding: 16px 0;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  transition: background 0.15s;
+}
+.menu-item:last-child { border-bottom: none; }
+.menu-item:active { background: rgba(255,255,255,0.1); }
+
+.menu-item.active-item .menu-item-text {
+  color: #ffe082;
+}
+
+.menu-item-text {
+  font-size: 17px;
+  color: #fff;
+  line-height: 1.4;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.25);
+}
+
+/* 分组标题（不可点击） */
+.menu-group-header {
+  padding: 16px 0px 4px;
+}
+
+.menu-group-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.4;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.25);
+}
+
+/* 子菜单项 */
+.menu-sub-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 24px 10px 0;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+  transition: background 0.15s;
+}
+.menu-sub-item:last-child { border-bottom: none; }
+.menu-sub-item:active { background: rgba(255,255,255,0.1); }
+
+.menu-sub-item.active-item .menu-sub-text {
+  color: #ffe082;
+  font-weight: 600;
+}
+
+.menu-sub-dot {
+  flex-shrink: 0;
+  color: rgba(255,255,255,0.7);
+  font-size: 16px;
+  line-height: 1;
+}
+
+.menu-sub-text {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.4;
+  flex: 1;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+/* ============================================================
+   hide-nav：封面/尾页 → 隐藏翻页箭头和目录按钮
+   hide-logo-bar：轮播页 → 隐藏底部 logo 条（目录弹窗内的不受影响）
+   ============================================================ */
+.hide-nav .nav-btn,
+.hide-nav .menu-btn {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.hide-logo-bar .bottom-bar {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
